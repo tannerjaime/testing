@@ -7,7 +7,7 @@
 		<style>
 			body {
 				font-family: Monospace;
-				background-color: #f0f0f0;
+				background-color: #000000;
 				margin: 0px;
 				overflow: hidden;
 			}
@@ -100,7 +100,7 @@
 				mouse = new THREE.Vector2();
 
 				renderer = new THREE.CanvasRenderer();
-				renderer.setClearColor( 0xf0f0f0 );
+				renderer.setClearColor( 0x000000 );
 				renderer.setPixelRatio( window.devicePixelRatio );
 				renderer.setSize( window.innerWidth, window.innerHeight );
 				container.appendChild( renderer.domElement );
@@ -118,7 +118,9 @@
 
 			function drawLine (beginX, beginY, beginZ, endX, endY, endZ, color) {
 				var material = new THREE.LineBasicMaterial({
-				color: color
+				color: color,
+				linewidth: 1,
+				opacity: 0.5
 				});
 
 				var geometry = new THREE.Geometry();
@@ -159,9 +161,20 @@
 			//
 
 			function animate() {
-				
+
 				for (var i = 0; i < numNodes; i++){
-					
+					for (var j = 0; j < numNodes/16; j++){
+						if (all[j].name == all[i].name){
+									drawLine(all[j].position.x, all[j].position.y, all[j].position.z, all[i].position.x, all[i].position.y, all[i].position.z, 0x1e1e1e);	
+									drawLine();
+						}
+								
+						if (all[j].sample == all[i].sample){
+									drawLine(all[j].position.x, all[j].position.y, all[j].position.z, all[i].position.x, all[i].position.y, all[i].position.z, 0x1e1e1e);	
+									drawLine();
+						}
+
+					}
 				}
 				requestAnimationFrame( animate );
 
@@ -210,12 +223,12 @@
 						INTERSECTED.material.program = programFill;
 							for (var i = 0; i < numNodes; i++){
 								if (INTERSECTED.name == all[i].name){
-									drawLine(INTERSECTED.position.x, INTERSECTED.position.y, INTERSECTED.position.z, all[i].position.x, all[i].position.y, all[i].position.z, 0xff003f);	
+									drawLine(INTERSECTED.position.x, INTERSECTED.position.y, INTERSECTED.position.z, all[i].position.x, all[i].position.y, all[i].position.z, 0xA1B0D7);	
 									drawLine();
 								}
 								
 								if (INTERSECTED.sample == all[i].name){
-									drawLine(INTERSECTED.position.x, INTERSECTED.position.y, INTERSECTED.position.z, all[i].position.x, all[i].position.y, all[i].position.z, 0x43d5f2);	
+									drawLine(INTERSECTED.position.x, INTERSECTED.position.y, INTERSECTED.position.z, all[i].position.x, all[i].position.y, all[i].position.z, 0x61D2D6);	
 									drawLine();
 								}
 						}
