@@ -34,20 +34,21 @@
 
 			var all = [];
 			var linesArray = []; 
+			var numNodes = 200;
 
 			var programFill = function ( context ) {
 
 				context.beginPath();
-				context.arc( 0, 0, 0.25, 0, PI2, true );
+				context.arc( 0, 0, 0.025, 0, PI2, true );
 				context.fill();
 
 			};
 
 			var programStroke = function ( context ) {
 
-				context.lineWidth = 0.025;
+				context.lineWidth = 0.005;
 				context.beginPath();
-				context.arc( 0, 0, 0.25, 0, PI2, true );
+				context.arc( 0, 0, 0.025, 0, PI2, true );
 				context.stroke();
 
 			};
@@ -76,7 +77,7 @@
 				scene = new THREE.Scene();
 
 				
-				for ( var i = 0; i < 100; i ++ ) {
+				for ( var i = 0; i < numNodes; i ++ ) {
 
 					var particle = new THREE.Sprite( new THREE.SpriteCanvasMaterial( { color: Math.random() * 0x808080 + 0x808080, program: programStroke } ) );
 					particle.position.x = Math.random() * 800 - 400;
@@ -84,8 +85,9 @@
 					particle.position.z = Math.random() * 800 - 400;
 					particle.scale.x = particle.scale.y = 100; //particle size
 					particle.name = Math.floor((Math.random() * 10) + 1); //random number between 1 and 10 to emulate characteristics
+					particle.sample = Math.floor((Math.random() * 10) + 1); //random number between 1 and 10 to emulate characteristics
 					all.push(particle);
-					console.log(particle);
+					// console.log(particle);
 					scene.add( particle );
 
 
@@ -93,7 +95,6 @@
 				
 				//
 
-				// drawLine();
 				
 				raycaster = new THREE.Raycaster();
 				mouse = new THREE.Vector2();
@@ -115,9 +116,9 @@
 
 			}
 
-			function drawLine (beginX, beginY, beginZ, endX, endY, endZ) {
+			function drawLine (beginX, beginY, beginZ, endX, endY, endZ, color) {
 				var material = new THREE.LineBasicMaterial({
-				color: 0xff003f
+				color: color
 				});
 
 				var geometry = new THREE.Geometry();
@@ -131,7 +132,7 @@
 				);
 
 				var line = new THREE.Line( geometry, material );
-				console.log(line);
+				// console.log(line);
 				// linesArray.push(line);
 				// console.log(linesArray.length);
 				scene.add( line );
@@ -158,7 +159,10 @@
 			//
 
 			function animate() {
-
+				
+				for (var i = 0; i < numNodes; i++){
+					
+				}
 				requestAnimationFrame( animate );
 
 				render();
@@ -195,17 +199,25 @@
 						if ( INTERSECTED ) INTERSECTED.material.program = programStroke;
 
 
-
+						for( var i = scene.children.length - 1; i >= numNodes; i--) { 
+						    var obj = scene.children[i];
+     						scene.remove(obj);
+						}
 
 
 
 						INTERSECTED = intersects[ 0 ].object;
 						INTERSECTED.material.program = programFill;
-						for (var i = 0; i < 100; i++){
-							if (INTERSECTED.name == all[i].name)
-							drawLine(INTERSECTED.position.x, INTERSECTED.position.y, INTERSECTED.position.z, all[i].position.x, all[i].position.y, all[i].position.z);	
-							drawLine();
-						
+							for (var i = 0; i < numNodes; i++){
+								if (INTERSECTED.name == all[i].name){
+									drawLine(INTERSECTED.position.x, INTERSECTED.position.y, INTERSECTED.position.z, all[i].position.x, all[i].position.y, all[i].position.z, 0xff003f);	
+									drawLine();
+								}
+								
+								if (INTERSECTED.sample == all[i].name){
+									drawLine(INTERSECTED.position.x, INTERSECTED.position.y, INTERSECTED.position.z, all[i].position.x, all[i].position.y, all[i].position.z, 0x43d5f2);	
+									drawLine();
+								}
 						}
 						
 
