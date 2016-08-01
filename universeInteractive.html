@@ -79,7 +79,8 @@
 				
 				for ( var i = 0; i < numNodes; i ++ ) {
 
-					var particle = new THREE.Sprite( new THREE.SpriteCanvasMaterial( { color: Math.random() * 0x808080 + 0x808080, program: programStroke } ) );
+					// var particle = new THREE.Sprite( new THREE.SpriteCanvasMaterial( { color: Math.random() * 0x808080 + 0x808080, program: programStroke } ) );
+					var particle = new THREE.Sprite( new THREE.SpriteCanvasMaterial( { color: Math.random() * 0x808080 + 0x808080, program: programFill } ) );
 					particle.position.x = Math.random() * 800 - 400;
 					particle.position.y = Math.random() * 800 - 400;
 					particle.position.z = Math.random() * 800 - 400;
@@ -116,11 +117,11 @@
 
 			}
 
-			function drawLine (beginX, beginY, beginZ, endX, endY, endZ, color) {
+			function drawLine (beginX, beginY, beginZ, endX, endY, endZ, alpha, weight, color) {
 				var material = new THREE.LineBasicMaterial({
 				color: color,
-				linewidth: 1,
-				opacity: 0.5
+				linewidth: weight,
+				opacity: alpha
 				});
 
 				var geometry = new THREE.Geometry();
@@ -165,12 +166,12 @@
 				for (var i = 0; i < numNodes; i++){
 					for (var j = 0; j < numNodes/16; j++){
 						if (all[j].name == all[i].name){
-									drawLine(all[j].position.x, all[j].position.y, all[j].position.z, all[i].position.x, all[i].position.y, all[i].position.z, 0x1e1e1e);	
+									drawLine(all[j].position.x, all[j].position.y, all[j].position.z, all[i].position.x, all[i].position.y, all[i].position.z, 0.3, 0.5, 0x1e1e1e);	
 									drawLine();
 						}
 								
 						if (all[j].sample == all[i].sample){
-									drawLine(all[j].position.x, all[j].position.y, all[j].position.z, all[i].position.x, all[i].position.y, all[i].position.z, 0x1e1e1e);	
+									drawLine(all[j].position.x, all[j].position.y, all[j].position.z, all[i].position.x, all[i].position.y, all[i].position.z, 0.3, 0.5, 0x1e1e1e);	
 									drawLine();
 						}
 
@@ -209,7 +210,7 @@
 
 					if ( INTERSECTED != intersects[ 0 ].object ) {
 
-						if ( INTERSECTED ) INTERSECTED.material.program = programStroke;
+						// if ( INTERSECTED ) INTERSECTED.material.program = programStroke;
 
 
 						for( var i = scene.children.length - 1; i >= numNodes; i--) { 
@@ -223,12 +224,12 @@
 						INTERSECTED.material.program = programFill;
 							for (var i = 0; i < numNodes; i++){
 								if (INTERSECTED.name == all[i].name){
-									drawLine(INTERSECTED.position.x, INTERSECTED.position.y, INTERSECTED.position.z, all[i].position.x, all[i].position.y, all[i].position.z, 0xA1B0D7);	
+									drawLine(INTERSECTED.position.x, INTERSECTED.position.y, INTERSECTED.position.z, all[i].position.x, all[i].position.y, all[i].position.z,0.7, 1,0x73FABB);	
 									drawLine();
 								}
 								
 								if (INTERSECTED.sample == all[i].name){
-									drawLine(INTERSECTED.position.x, INTERSECTED.position.y, INTERSECTED.position.z, all[i].position.x, all[i].position.y, all[i].position.z, 0x61D2D6);	
+									drawLine(INTERSECTED.position.x, INTERSECTED.position.y, INTERSECTED.position.z, all[i].position.x, all[i].position.y, all[i].position.z, 0.7, 1,0xFE9F76);	
 									drawLine();
 								}
 						}
@@ -240,7 +241,7 @@
 
 				} else {
 
-					if ( INTERSECTED ) INTERSECTED.material.program = programStroke;
+					// if ( INTERSECTED ) INTERSECTED.material.program = programStroke;
 
 					INTERSECTED = null;
 
