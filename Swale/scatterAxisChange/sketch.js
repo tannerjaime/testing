@@ -5,13 +5,13 @@
   var xVariable = "time";
   var yVariable = {};
   var possible = {};
-    possible.temperature_f = [];
-    possible.rain_in = [];
-    possible.humidity_per = [];
-    possible.wind_direction_deg = [];
-    possible.wind_speed_mph = [];
-    possible.pressure_pa = [];
-    possible.light_v = [];
+  possible.temperature_f = [];
+  possible.rain_in = [];
+  possible.humidity_per = [];
+  possible.wind_direction_deg = [];
+  possible.wind_speed_mph = [];
+  possible.pressure_pa = [];
+  possible.light_v = [];
 
   var dropdown;
   var testDiv;
@@ -49,8 +49,7 @@
         drawTemp();
       } else {}
     }
-    
- 
+
 
   }
 
@@ -72,10 +71,10 @@
       // tempMapped.push(map(temperature_f[i], 0, 100, height - height / 3, height / 4));
 
     }
-    
+
     yVariable = possible.temperature_f;
     drawTemp();
-    
+
 
   }
 
@@ -87,9 +86,7 @@
     majorLines();
     strokeLinesX();
     strokeLinesY();
-    
-  
-    
+
     console.log(yVariable);
     for (var r = 1; r < possible.temperature_f.length; r++) {
       stroke(14, 164, 252);
@@ -138,3 +135,7 @@
       line(xMin - 3, y, xMax, y);
     }
   }
+  
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
+}
