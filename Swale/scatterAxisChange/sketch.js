@@ -3,8 +3,15 @@
   var tempMapped = [];
   var xTemp = [];
   var xVariable = "time";
-  var yVariable = "temperature_f";
+  var yVariable = {};
   var possible = {};
+    possible.temperature_f = [];
+    possible.rain_in = [];
+    possible.humidity_per = [];
+    possible.wind_direction_deg = [];
+    possible.wind_speed_mph = [];
+    possible.pressure_pa = [];
+    possible.light_v = [];
 
   var dropdown;
   var testDiv;
@@ -36,49 +43,42 @@
 
   function mouseReleased() {
 
-    for (var i = 0; i < options.length; i++) {
-      if (dropdown.elt.value === options[i]) {
-        yVariable = options[i];
+    for (var key in possible) {
+      if (dropdown.elt.value === key) {
+        yVariable = possible[key];
         drawTemp();
       } else {}
     }
+    
+ 
 
   }
 
   function loadTemp(weather) {
-    possible.temperature_f = [];
-    possible.rain_in = [];
-    possible.humidity_per = [];
-    possible.wind_direction_deg = [];
-    possible.wind_speed_mph = [];
-    possible.pressure_pa = [];
-    possible.light_v = [];
-
 
     // get the humidity value out of the loaded JSON
     for (var i = 0; i < weather.results.length; i++) {
 
       possible.temperature_f.push(map(weather.results[i].temperature_f, 0, 100, height - height / 3, height / 4));
       possible.rain_in.push(map(weather.results[i].rain_in, 0, 5, height - height / 3, height / 4));
-      possible.temperature_f.push(map(weather.results[i].humidity_per, 0, 100, height - height / 3, height / 4));
-      possible.rain_in.push(map(weather.results[i].wind_direction_deg, 0, 100, height - height / 3, height / 4));
-      possible.rain_in.push(map(weather.results[i].wind_speed_mph, 0, 20, height - height / 3, height / 4));
-      possible.temperature_f.push(map(weather.results[i].pressure_pa, 0, 102000, height - height / 3, height / 4));
-      possible.rain_in.push(map(weather.results[i].light_v, 0, 10, height - height / 3, height / 4));
+      possible.humidity_per.push(map(weather.results[i].humidity_per, 0, 100, height - height / 3, height / 4));
+      possible.wind_direction_deg.push(map(weather.results[i].wind_direction_deg, 0, 100, height - height / 3, height / 4));
+      possible.wind_speed_mph.push(map(weather.results[i].wind_speed_mph, 0, 20, height - height / 3, height / 4));
+      possible.pressure_pa.push(map(weather.results[i].pressure_pa, 0, 102000, height - height / 3, height / 4));
+      possible.light_v.push(map(weather.results[i].light_v, 0, 10, height - height / 3, height / 4));
 
 
       xTemp.push(map(i, 0, weather.results.length, width / 3, width - width / 3));
       // tempMapped.push(map(temperature_f[i], 0, 100, height - height / 3, height / 4));
 
     }
+    
+    yVariable = possible.temperature_f;
     drawTemp();
     
 
   }
 
-function readOBJ(obj, prop) {
-    return obj[prop];
-}
 
   function drawTemp() {
     fill(232);
@@ -88,14 +88,14 @@ function readOBJ(obj, prop) {
     strokeLinesX();
     strokeLinesY();
     
-    var cat = readOBJ(possible, yVariable);
-    console.log(cat);
-    // console.log(possible[yVariable]);
+  
+    
+    console.log(yVariable);
     for (var r = 1; r < possible.temperature_f.length; r++) {
       stroke(14, 164, 252);
       strokeWeight(4);
 
-      // line(xTemp[r - 1], current[r - 1], xTemp[r], current[r]);
+      line(xTemp[r - 1], yVariable[r - 1], xTemp[r], yVariable[r]);
 
     }
   }
