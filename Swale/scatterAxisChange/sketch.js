@@ -14,7 +14,8 @@
   possible.light_v = [];
 
   var dropdown;
-  var testDiv;
+  var hold;
+  var title;
 
   function setup() {
     // noLoop();
@@ -24,24 +25,29 @@
     var url = 'http://54.235.200.47/tower';
     loadJSON(url, loadTemp);
 
-
+    title = createDiv("Over Time");
+    title.id('title');
+    title.position(width / 2 + 70, height * 0.1);
+    
     dropdown = createElement('select');
+    dropdown.id('yAxis');
     for (var i = 0; i < options.length; i++) {
       var option = createElement('option');
       option.attribute('value', options[i]);
       option.html(optionNames[i]);
       option.parent(dropdown);
     }
-    dropdown.position(width / 2, height * 0.89)
-
-    var droptest = createDiv('what is pressed')
+    dropdown.position(width / 3, height * 0.85)
+    var droptest = createDiv('Y Variable');
     dropdown.elt.onchange = function() {
       droptest.html(this.value);
     }
+    droptest.position(width / 3 - 100, height / 2);
+    droptest.style('transform', 'translate(' + 0 + 'px) rotate(' + 270 + 'deg)');
   }
 
 
-  function mouseReleased() {
+  function mouseMoved() {
 
     for (var key in possible) {
       if (dropdown.elt.value === key) {
@@ -95,6 +101,10 @@
       line(xTemp[r - 1], yVariable[r - 1], xTemp[r], yVariable[r]);
 
     }
+    noFill();
+    stroke(86);
+    strokeWeight(7);
+    rect(30, 30, width - 60, height - 60);
   }
 
   function majorLines() {
@@ -135,7 +145,7 @@
       line(xMin - 3, y, xMax, y);
     }
   }
-  
-function windowResized() {
-  resizeCanvas(windowWidth, windowHeight);
-}
+
+  // function windowResized() {
+  //   resizeCanvas(windowWidth, windowHeight);
+  // }
