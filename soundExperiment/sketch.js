@@ -10,7 +10,7 @@ function preload() {
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-
+  frameRate(15);
   for (var r = 0; r < 900; r++) {
     for (var c = 0; c < table.getColumnCount(); c++) {
       if (table.getString(r, c).length <= 3){
@@ -51,10 +51,10 @@ function draw() {
   song.rate(speed);
 
   // Draw some circles to show what is going on
-  stroke(0);
-  fill(51, 100);
+
   // ellipse(mouseX, 100, 48, 48);
   stroke(0);
-  fill(51, 100);
-  ellipse(100, mouseY, 48, 48);
+  fill(255, 0, 0);
+  ellipse(count*2, height - currentLocation, 5, 5);
+  count++;
 } // ellipse(mouseX, 100, 48, 48);
