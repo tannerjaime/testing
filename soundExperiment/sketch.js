@@ -4,7 +4,7 @@ var count = 0;
 
 function preload() {
   // Load a sound file
-  song = loadSound('note.wav');
+  song = loadSound('better.wav');
   table = loadTable("testSet.csv", "csv", "header");
 }
 
